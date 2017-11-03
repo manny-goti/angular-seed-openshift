@@ -32,11 +32,11 @@ function createServlet(Class) {
 
 
 function HttpServer(handlers) {
-    
+
 
     this.handlers = handlers;
     this.server = http.createServer(this.handleRequest_.bind(this));
-    
+
 }
 
 HttpServer.prototype.start = function (port) {
@@ -48,7 +48,7 @@ HttpServer.prototype.start = function (port) {
 
 HttpServer.prototype.parseUrl_ = function (urlString) {
     var parsed = url.parse(urlString);
-    parsed.pathname = url.resolve('./app/', parsed.pathname);
+    parsed.pathname = url.resolve('./src/app/', parsed.pathname);
     return url.parse(url.format(parsed), true);
 };
 
@@ -88,7 +88,7 @@ StaticServlet.MimeMap = {
 
 StaticServlet.prototype.handleRequest = function (req, res) {
     var self = this;
-    var path = ('./app/' + req.url.pathname).replace('//', '/').replace(/%(..)/g, function (match, hex) {
+    var path = ('./src/app/' + req.url.pathname).replace('//', '/').replace(/%(..)/g, function (match, hex) {
         return String.fromCharCode(parseInt(hex, 16));
     });
     var parts = path.split('/');
@@ -390,9 +390,9 @@ fs.mkdirSyncRecursive = function(dirPath) {
     try{
         fs.mkdirSync(dirPath)
     } catch(e) {
-        
+
         fs.mkdirSyncRecursive(path.dirname(dirPath));
-     
+
         fs.mkdirSyncRecursive(dirPath);
 
     }
